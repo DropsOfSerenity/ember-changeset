@@ -189,21 +189,13 @@ export function changeset(obj, validateFn = defaultValidatorFn, validationMap = 
         let content = get(this, CONTENT);
         let changes = get(this, CHANGES);
 
-        let changedKeys = this._allKeys(changes);
-        let resetProperties = {};
+        keys(changes).forEach((key) => {
+          let change = changes[key];
 
-        changedKeys.forEach(function(key) {
-          let [root] = key.split('.');
-          if (!resetProperties[root]) {
-            resetProperties[root] = get(content, root);
-          }
-        });
-
-        setProperties(content, changes);
-
-        this._allKeys(resetProperties).forEach(function(key) {
-          if (!changedKeys.includes(key)) {
-            deepSet(content, key, get(resetProperties, key));
+          if (Ember.typeOf(change) == 'instance') {
+            set(content, key, change)
+          } else {
+            deepSet(content, key, change)
           }
         });
       }

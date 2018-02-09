@@ -624,9 +624,9 @@ export function changeset(obj, validateFn = defaultValidatorFn, validationMap = 
 
       let oldValue = get(content, key);
 
-      if (isObject(oldValue) && !plainValue) {
-        return this._relayFor(key);
-      }
+      // if (isObject(oldValue) && !plainValue) {
+      //   return this._relayFor(key);
+      // }
 
       return oldValue;
     },
